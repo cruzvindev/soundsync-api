@@ -1,29 +1,23 @@
 create table artist (
-   id bigint not null auto_increment,
-   name varchar(60) not null,
+   id bigint not null auto_increment primary key,
+   artist_name varchar(60) not null,
    country varchar(60) not null,
-   biography varchar(250) not null,
-
-   primary key (id)
+   biography varchar(450) not null
 ) engine=InnoDB default charset=utf8;
 
 create table album (
-   id bigint not null auto_increment,
+   id bigint not null auto_increment primary key,
    artist_id bigint not null,
    title varchar(100) not null,
-   release_date datetime not null,
-   genre VARCHAR(50)not null ,
-
-   primary key (id)
+   release_year varchar(15) not null,
+   genre VARCHAR(50)not null
 )engine=InnoDB default charset=utf8;
 
 create table music (
-   id bigint not null auto_increment,
+   id bigint not null auto_increment primary key,
    album_id bigint not null,
    title varchar(100) not null,
-   release_year varchar(10) not null,
-
-   primary key (id)
+   duration int(200) not null
 )engine=InnoDB default charset=utf8;
 
 
