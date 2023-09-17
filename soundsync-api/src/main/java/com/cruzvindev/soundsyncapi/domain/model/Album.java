@@ -16,16 +16,16 @@ public class Album {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String title;
+    private String titulo;
 
-    @Column(name = "release_year")
-    private String releaseYear;
+    @Column(name = "ano_lancamento")
+    private String anoLancamento;
 
     @ManyToOne
-    @JoinColumn(name = "artist_id")
-    private Artist artist;
-
+    @JoinColumn(name = "artista_id")
+    private Artista artista;
+    private String genero;
     @OneToMany
-    private List<Music> songs = new ArrayList<>();
+    private List<Musica> musicas = new ArrayList<>();
 
 }

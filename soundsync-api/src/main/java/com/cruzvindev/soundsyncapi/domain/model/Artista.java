@@ -2,7 +2,6 @@ package com.cruzvindev.soundsyncapi.domain.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Generated;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -11,20 +10,20 @@ import java.util.List;
 @Entity
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Artist {
+public class Artista {
     @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "artist_name")
-    private String name;
+    @Column(name = "artista_nome")
+    private String nome;
 
-    private String country;
+    private String origem;
 
-    private String biography;
+    private String biografia;
 
-    @OneToMany(mappedBy = "artist")
+    @OneToMany(mappedBy = "artista")
     private List<Album> albums = new ArrayList<>();
 
 }
