@@ -1,9 +1,10 @@
 package com.cruzvindev.soundsyncapi.domain.model;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,13 +17,13 @@ public class Album {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
+    @NotBlank
     private String titulo;
-
-    @Column(name = "ano_lancamento")
     private String anoLancamento;
-
     @ManyToOne
-    @JoinColumn(name = "artista_id")
+    @JoinColumn(name = "artista_id", nullable = false)
     private Artista artista;
     private String genero;
     @OneToMany

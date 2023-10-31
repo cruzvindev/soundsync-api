@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ArtistaDTO {
+public class ArtistaDto {
 
     private Long id;
     private String nome;

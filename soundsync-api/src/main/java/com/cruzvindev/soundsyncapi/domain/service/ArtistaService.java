@@ -1,4 +1,4 @@
-package com.cruzvindev.soundsyncapi.domain;
+package com.cruzvindev.soundsyncapi.domain.service;
 
 import com.cruzvindev.soundsyncapi.domain.exception.NegocioException;
 import com.cruzvindev.soundsyncapi.domain.model.Artista;
@@ -20,7 +20,11 @@ public class ArtistaService {
         return artistaRepository.save(artistaBusca);
     }
 
-
+    @Transactional
+    public void excluir(Long artistaId){
+        artistaRepository.deleteById(artistaId);
+        artistaRepository.flush();
+    }
 
     public Artista buscarOuFalhar(Long id){
        return artistaRepository.findById(id)
