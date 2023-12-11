@@ -16,3 +16,11 @@ insert into artista(id, artista_nome, origem, biografia) values (3, 'Eminem', 'U
 insert into artista(id, artista_nome, origem, biografia) values (4, 'Beyoncé', 'United States', 'Beyoncé Giselle Knowles-Carter é uma cantora, compositora e atriz norte-americana. Ela se tornou uma das artistas mais aclamadas e influentes da música contemporânea, com sucessos que abrangem diversos gêneros.');
 insert into artista(id, artista_nome, origem, biografia) values (5, 'Ed Sheeran', 'United Kingdom', 'Ed Sheeran é um cantor e compositor britânico. Com sua voz única e habilidades em tocar violão, ele se tornou um dos artistas mais populares da música pop atual, com várias músicas de sucesso e uma legião de fãs em todo o mundo.');
 insert into artista(id, artista_nome, origem, biografia) values (6, 'Shakira', 'Colombia', 'Shakira Isabel Mebarak Ripoll é uma cantora, compositora e dançarina colombiana. Conhecida por sua voz única e suas habilidades de dança, Shakira conquistou o público global e se tornou uma das artistas latinas de maior sucesso no cenário internacional.');
+
+insert into album(id, artista_id, titulo, ano_lancamento, genero) values (1, 1, 'Bad', '1987', 'Pop');
+insert into album(id, artista_id, titulo, ano_lancamento, genero) values (2, 1, 'Dangerous', '1991', 'Pop');
+insert into album(id, artista_id, titulo, ano_lancamento, genero) values (3, 3, 'The Eminem Show', '2002', 'Rap');
+insert into album(id, artista_id, titulo, ano_lancamento, genero) values (4, 5, 'X', '2014', 'Pop');
+
+insert into musica(id, album_id, titulo, duracao) values (1, 1, 'Smooth Criminal', 251);
+insert into musica(id, album_id, titulo, duracao) values (2, 2, 'Jam', 339);

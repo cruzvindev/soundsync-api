@@ -1,4 +1,4 @@
-package com.cruzvindev.soundsyncapi.assemblers.disassemblers;
+package com.cruzvindev.soundsyncapi.montadores.desmontador;
 
 import com.cruzvindev.soundsyncapi.domain.model.Artista;
 import com.cruzvindev.soundsyncapi.dtos.inputs.ArtistaDtoInput;
@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class ArtistaDtoDisassembler {
+public class ArtistaDtoDesmontador {
 
 
     @Autowired

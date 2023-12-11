@@ -1,7 +1,7 @@
-package com.cruzvindev.soundsyncapi.api;
+package com.cruzvindev.soundsyncapi.api.controllers;
 
-import com.cruzvindev.soundsyncapi.assemblers.assembler.ArtistaDTOAssembler;
-import com.cruzvindev.soundsyncapi.assemblers.disassemblers.ArtistaDtoDisassembler;
+import com.cruzvindev.soundsyncapi.montadores.montador.ArtistaDtoMontador;
+import com.cruzvindev.soundsyncapi.montadores.desmontador.ArtistaDtoDesmontador;
 import com.cruzvindev.soundsyncapi.domain.service.ArtistaService;
 import com.cruzvindev.soundsyncapi.domain.model.Artista;
 import com.cruzvindev.soundsyncapi.domain.repository.ArtistaRepository;
@@ -25,10 +25,10 @@ public class ArtistaController {
     private ArtistaRepository artistaRepository;
 
     @Autowired
-    private ArtistaDTOAssembler artistaAssembler;
+    private ArtistaDtoMontador artistaAssembler;
 
     @Autowired
-    private ArtistaDtoDisassembler artistaDisassembler;
+    private ArtistaDtoDesmontador artistaDisassembler;
 
     @GetMapping("/{artistaId}")
     @ResponseStatus(HttpStatus.OK)
@@ -46,7 +46,7 @@ public class ArtistaController {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public ArtistaDto cadastrar(@RequestBody @Valid ArtistaDtoInput artistaInput){
+    public ArtistaDto cadastrar(@RequestBody @Valid ArtistaDtoInput artistaInput) throws Exception {
         var artista = artistaDisassembler.paraObjetoDominio(artistaInput);
         artista = artistaRepository.save(artista);
         return artistaAssembler.paraModelo(artista);

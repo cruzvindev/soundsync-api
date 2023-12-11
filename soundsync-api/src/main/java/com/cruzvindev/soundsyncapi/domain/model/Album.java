@@ -19,8 +19,9 @@ public class Album {
     private Long id;
 
     @Column(nullable = false)
-    @NotBlank
     private String titulo;
+
+    @Column(name = "ano_lancamento")
     private String anoLancamento;
     @ManyToOne
     @JoinColumn(name = "artista_id", nullable = false)

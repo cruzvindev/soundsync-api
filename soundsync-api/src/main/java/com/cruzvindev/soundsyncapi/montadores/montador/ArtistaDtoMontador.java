@@ -1,4 +1,4 @@
-package com.cruzvindev.soundsyncapi.assemblers.assembler;
+package com.cruzvindev.soundsyncapi.montadores.montador;
 
 import com.cruzvindev.soundsyncapi.domain.model.Artista;
 import com.cruzvindev.soundsyncapi.dtos.outputs.ArtistaDto;
@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class ArtistaDTOAssembler {
+public class ArtistaDtoMontador {
 
     @Autowired
     private ModelMapper modelMapper;
