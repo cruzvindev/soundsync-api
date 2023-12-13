@@ -1,5 +1,6 @@
 package com.cruzvindev.soundsyncapi.domain.service;
 
+import com.cruzvindev.soundsyncapi.domain.exception.EntidadeNaoEncontradaException;
 import com.cruzvindev.soundsyncapi.domain.exception.NegocioException;
 import com.cruzvindev.soundsyncapi.domain.model.Album;
 import com.cruzvindev.soundsyncapi.domain.repository.AlbumRepository;
@@ -29,7 +30,7 @@ public class AlbumService {
 
     public Album buscarOuFalhar(Long id){
         return albumRepository.findById(id)
-                .orElseThrow(()-> new NegocioException("Album não encontrado"));
+                .orElseThrow(()-> new EntidadeNaoEncontradaException(String.format("O album de id %d não foi encontrado", id)));
     }
 
 }
