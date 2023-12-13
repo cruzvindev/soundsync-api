@@ -17,7 +17,7 @@ public class MusicaService {
 
     public Musica buscarOuFalhar(Long musicaId){
         return musicaRepository.findById(musicaId)
-                .orElseThrow(()-> new NegocioException("Música não encontrada"));
+                .orElseThrow(()-> new NegocioException(String.format("A música de id %d não foi encontradada", musicaId)));
     }
 
 

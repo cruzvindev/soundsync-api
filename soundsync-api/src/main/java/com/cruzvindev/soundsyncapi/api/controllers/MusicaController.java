@@ -57,4 +57,10 @@ public class MusicaController {
 
         return musicaMontador.paraModelo(musicaRepository.save(musicaBuscada));
     }
+
+    @DeleteMapping("/{id}")
+    public void deletar(@PathVariable Long id){
+        var musicaBuscada = musicaService.buscarOuFalhar(id);
+        musicaRepository.delete(musicaBuscada);
+    }
 }
