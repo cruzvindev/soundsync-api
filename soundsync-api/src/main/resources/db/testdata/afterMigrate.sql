@@ -10,7 +10,7 @@ alter table album auto_increment = 1;
 alter table musica auto_increment = 1;
 alter table artista auto_increment = 1;
 
-insert into artista(id, artista_nome, origem, biografia) values (1, 'Michael Jackson', 'United States', 'Michael Joseph Jackson foi um cantor, compositor e dançarino estadunidense. Apelidado de "Rei do Pop", foi um dos ícones culturais mais importantes e influentes de todos os tempos e um dos maiores artistas da história da música');
+insert into artista(id, artista_nome, origem, biografia) values (1, 'Michael Jackson', 'United States', 'Michael Joseph Jackson foi um cantor, compositor e dançarino estadunidense. Apelidado de ''Rei do Pop'', foi um dos ícones culturais mais importantes e influentes de todos os tempos e um dos maiores artistas da história da música');
 insert into artista(id, artista_nome, origem, biografia) values (2, 'Madonna', 'United States', 'Madonna Louise Veronica Ciccone é uma cantora, compositora, atriz e empresária norte-americana. Conhecida como a "Rainha do Pop", Madonna é uma das artistas musicais mais bem-sucedidas e influentes de todos os tempos.');
 insert into artista(id, artista_nome, origem, biografia) values (3, 'Eminem', 'United States', 'Eminem, cujo nome verdadeiro é Marshall Mathers III, é um rapper e compositor americano. Eminem é um dos artistas de rap mais bem-sucedidos e influentes da história.');
 insert into artista(id, artista_nome, origem, biografia) values (4, 'Beyoncé', 'United States', 'Beyoncé Giselle Knowles-Carter é uma cantora, compositora e atriz norte-americana. Ela se tornou uma das artistas mais aclamadas e influentes da música contemporânea, com sucessos que abrangem diversos gêneros.');

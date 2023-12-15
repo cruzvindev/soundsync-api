@@ -1,32 +1,27 @@
-package com.cruzvindev.soundsyncapi.api.exceptionhandler;
+package com.cruzvindev.soundsyncapi.domain.exception.exceptionhandler;
+
 
 
 import com.cruzvindev.soundsyncapi.domain.exception.EntidadeEmUsoException;
 import com.cruzvindev.soundsyncapi.domain.exception.EntidadeNaoEncontradaException;
-import com.cruzvindev.soundsyncapi.domain.exception.ExceptionMessages;
-import com.cruzvindev.soundsyncapi.domain.exception.NegocioException;
 import lombok.SneakyThrows;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.net.URI;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 
-@RestControllerAdvice
+@ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
-
-    @Autowired
-    private ExceptionMessages exceptionMessages;
-
 
     public static final String MSG_ERRO_GENERICA_USUARIO_FINAL = "Ocorreu um erro interno inesperado no sistema. Tente novamente e se o "
             + "problema persistir, entre em contato com o "
@@ -56,7 +51,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getLocalizedMessage());
         problemDetail.setStatus(HttpStatus.NOT_FOUND);
-        problemDetail.setTitle("Recurso Inexistente");
+        problemDetail.setTitle("Recurso Não Encontrado");
         problemDetail.setDetail(ex.getMessage());
         problemDetail.setProperty("timeStamp:", OffsetDateTime.now(ZoneOffset.UTC)
                 .format( DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX")));
@@ -95,12 +90,37 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
         return handleExceptionInternal(ex, problemDetail, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
+    @SneakyThrows
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Object> handleGenericException(Exception ex, HttpHeaders headers, HttpStatusCode status, WebRequest request){
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR, ex.getLocalizedMessage());
+        problemDetail.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+        problemDetail.setTitle("Erro Interno");
+        problemDetail.setDetail(MSG_ERRO_GENERICA_USUARIO_FINAL);
+        problemDetail.setProperty("timeStamp:", OffsetDateTime.now(ZoneOffset.UTC)
+                .format( DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX")));
+        problemDetail.setType(new URI("https://www.youtube.com.br"));
+
+        return handleExceptionInternal(ex, problemDetail, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
+    }
+
+    @SneakyThrows
+    @Override
+    protected ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getLocalizedMessage());
+        problemDetail.setStatus(HttpStatus.NOT_FOUND);
+        problemDetail.setTitle("Recurso Inexistente");
+        problemDetail.setDetail(String.format("O recurso '%s' , que você tentou acessar, é inexistente", ex.getRequestURL()));
+        problemDetail.setProperty("timeStamp:", OffsetDateTime.now(ZoneOffset.UTC)
+                .format( DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX")));
+        problemDetail.setType(new URI("https://www.youtube.com.br"));
+
+        return handleExceptionInternal(ex, problemDetail,new HttpHeaders(), status, request);
+    }
 
     @Override
     protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers, HttpStatusCode statusCode, WebRequest request) {
         return super.handleExceptionInternal(ex, body, headers, statusCode, request);
     }
-
-
 
 }
