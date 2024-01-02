@@ -4,6 +4,8 @@ package com.cruzvindev.soundsyncapi.domain.exception.exceptionhandler;
 
 import com.cruzvindev.soundsyncapi.domain.exception.EntidadeEmUsoException;
 import com.cruzvindev.soundsyncapi.domain.exception.EntidadeNaoEncontradaException;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.SneakyThrows;
 import org.springframework.http.*;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -19,6 +21,8 @@ import java.net.URI;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
@@ -80,6 +84,16 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @SneakyThrows
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+
+        var bidingResult =  ex.getBindingResult();
+        List<Fields> fields = bidingResult.getAllErrors()
+                .stream()
+                .map(objectError -> Fields.builder()
+                        .name(objectError.getObjectName())
+                        .userMessage(objectError.getDefaultMessage())
+                        .build())
+                .collect(Collectors.toList());
+
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR, ex.getLocalizedMessage());
         problemDetail.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
         problemDetail.setTitle("Erro de Validação");
@@ -87,6 +101,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         problemDetail.setProperty("timeStamp:", OffsetDateTime.now(ZoneOffset.UTC)
                 .format( DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX")));
         problemDetail.setType(new URI("https://www.youtube.com.br"));
+        problemDetail.setProperty("Fields:", fields);
 
         return handleExceptionInternal(ex, problemDetail, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
@@ -123,4 +138,10 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return super.handleExceptionInternal(ex, body, headers, statusCode, request);
     }
 
+    @Getter
+    @Builder
+    public static class Fields{
+        private String name;
+        private String userMessage;
+    }
 }

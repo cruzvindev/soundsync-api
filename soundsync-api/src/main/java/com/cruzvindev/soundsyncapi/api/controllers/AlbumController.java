@@ -7,6 +7,7 @@ import com.cruzvindev.soundsyncapi.domain.repository.AlbumRepository;
 import com.cruzvindev.soundsyncapi.domain.service.AlbumService;
 import com.cruzvindev.soundsyncapi.dtos.inputs.AlbumDtoInput;
 import com.cruzvindev.soundsyncapi.dtos.outputs.AlbumDto;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -41,7 +42,7 @@ public class AlbumController {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public AlbumDto cadastrar(@RequestBody AlbumDtoInput albumInput){
+    public AlbumDto cadastrar(@RequestBody @Valid AlbumDtoInput albumInput){
         var album = albumDisassembler.paraObjetoDominio(albumInput);
         return albumAssembler.paraModelo(albumService.salvar(album));
     }

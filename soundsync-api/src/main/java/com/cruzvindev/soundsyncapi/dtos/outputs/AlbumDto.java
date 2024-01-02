@@ -1,9 +1,5 @@
 package com.cruzvindev.soundsyncapi.dtos.outputs;
 
-
-import com.cruzvindev.soundsyncapi.dtos.inputs.ArtistaIdInput;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
