@@ -7,6 +7,9 @@ import com.cruzvindev.soundsyncapi.domain.exception.EntidadeNaoEncontradaExcepti
 import lombok.Builder;
 import lombok.Getter;
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.*;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -32,6 +35,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             + "administrador do sistema";
 
     public static final String MSG_CAMPOS_INVALIDOS = "Um ou mais campos estão inválidos. Faça o preenchimento correto e tente novamente";
+
+    @Autowired
+    private MessageSource messageSource;
 
     @SneakyThrows
     @Override
@@ -86,12 +92,16 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
 
         var bidingResult =  ex.getBindingResult();
-        List<Fields> fields = bidingResult.getAllErrors()
+        List<Fields> fields = bidingResult.getFieldErrors()
                 .stream()
-                .map(objectError -> Fields.builder()
-                        .name(objectError.getObjectName())
-                        .userMessage(objectError.getDefaultMessage())
-                        .build())
+                .map(objectError -> {
+                    String message = messageSource.getMessage(objectError, LocaleContextHolder.getLocale());
+
+                    return Fields.builder()
+                        .name(objectError.getField())
+                        .userMessage(message)
+                        .build();
+                })
                 .collect(Collectors.toList());
 
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR, ex.getLocalizedMessage());
