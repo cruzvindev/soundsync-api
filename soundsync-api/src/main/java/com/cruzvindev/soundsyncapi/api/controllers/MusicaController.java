@@ -51,7 +51,7 @@ public class MusicaController {
 
     @PostMapping("/adicionar")
     @ResponseStatus(HttpStatus.CREATED)
-    public void salvar(@RequestBody MusicaDtoInput musicaInput){
+    public void salvar(@RequestBody @Valid MusicaDtoInput musicaInput){
         musicaService.salvar(musicaInput);
     }
 
