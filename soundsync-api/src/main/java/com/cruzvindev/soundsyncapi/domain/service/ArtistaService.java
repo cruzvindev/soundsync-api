@@ -21,9 +21,8 @@ public class ArtistaService {
     private ArtistaRepository artistaRepository;
 
     @Transactional
-    public Artista salvar(Artista artista)throws Exception{
-        Artista artistaBusca = buscarOuFalhar(artista.getId());
-        return artistaRepository.save(artistaBusca);
+    public Artista salvar(Artista artista){
+        return artistaRepository.save(artista);
     }
 
     @Transactional
