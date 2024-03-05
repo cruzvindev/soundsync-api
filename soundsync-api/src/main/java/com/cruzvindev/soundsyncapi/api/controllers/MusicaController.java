@@ -20,7 +20,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/musica")
+@RequestMapping("/v1/musica")
 public class MusicaController {
 
     @Autowired
