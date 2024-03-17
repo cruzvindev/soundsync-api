@@ -49,7 +49,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             problemDetail.setDetail(MSG_CAMPOS_INVALIDOS);
             problemDetail.setProperty("timeStamp:", OffsetDateTime.now(ZoneOffset.UTC)
                     .format( DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX")));
-            problemDetail.setType(new URI("https://www.youtube.com.br"));
+            problemDetail.setType(new URI("https://soundsync.com.br/mensagem-nao-legivel"));
 
             return handleExceptionInternal(ex, problemDetail, headers, status, request);
 
@@ -65,7 +65,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         problemDetail.setDetail(ex.getMessage());
         problemDetail.setProperty("timeStamp:", OffsetDateTime.now(ZoneOffset.UTC)
                 .format( DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX")));
-        problemDetail.setType(new URI("https://www.youtube.com.br"));
+        problemDetail.setType(new URI("https://soundsync.com.br/recurso-nao-encontrado"));
 
         return handleExceptionInternal(ex, problemDetail, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
 
@@ -81,7 +81,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         problemDetail.setDetail(ex.getMessage());
         problemDetail.setProperty("timeStamp:", OffsetDateTime.now(ZoneOffset.UTC)
                 .format( DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX")));
-        problemDetail.setType(new URI("https://www.youtube.com.br"));
+        problemDetail.setType(new URI("https://soundsync.com.br/recurso-em-uso"));
 
         return handleExceptionInternal(ex, problemDetail, new HttpHeaders(), HttpStatus.CONFLICT, request);
 
@@ -110,8 +110,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         problemDetail.setDetail(MSG_CAMPOS_INVALIDOS);
         problemDetail.setProperty("timeStamp:", OffsetDateTime.now(ZoneOffset.UTC)
                 .format( DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX")));
-        problemDetail.setType(new URI("https://www.youtube.com.br"));
-        problemDetail.setProperty("Fields:", fields);
+        problemDetail.setType(new URI("https://soundsync.com.br/dados-invalidos"));
+        problemDetail.setProperty("fields:", fields);
 
         return handleExceptionInternal(ex, problemDetail, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
@@ -124,7 +124,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         problemDetail.setDetail(MSG_ERRO_GENERICA_USUARIO_FINAL);
         problemDetail.setProperty("timeStamp:", OffsetDateTime.now(ZoneOffset.UTC)
                 .format( DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX")));
-        problemDetail.setType(new URI("https://www.youtube.com.br"));
+        problemDetail.setType(new URI("https://soundsync.com.br/erro-interno"));
 
         return handleExceptionInternal(ex, problemDetail, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
@@ -138,7 +138,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         problemDetail.setDetail(String.format("O recurso '%s' , que você tentou acessar, é inexistente", ex.getRequestURL()));
         problemDetail.setProperty("timeStamp:", OffsetDateTime.now(ZoneOffset.UTC)
                 .format( DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX")));
-        problemDetail.setType(new URI("https://www.youtube.com.br"));
+        problemDetail.setType(new URI("https://soundsync.com.br/recurso-inexistente"));
 
         return handleExceptionInternal(ex, problemDetail,new HttpHeaders(), status, request);
     }
