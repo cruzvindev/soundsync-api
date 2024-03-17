@@ -1,0 +1,78 @@
+@Configuration
+public class SpringDocConfig {
+
+    @Bean
+    public OpenAPI customOpenAPI() {
+        return new OpenAPI()
+                .info(new Info()
+                        .title("AlgaFood API")
+                        .description("API aberta para clientes e restaurantes.")
+                        .version("1")
+                        .contact(new Contact()
+                                .name("AlgaWorks")
+                                .url("https://www.algaworks.com")
+                                .email("contato@algaworks.com")
+                        )
+                )
+                .components(new Components()
+                        .addSecuritySchemes("AlgaFood", new SecurityScheme()
+                                .type(SecurityScheme.Type.OAUTH2)
+                                .flows(new OAuthFlows()
+                                        .password(new OAuthFlow()
+                                                .tokenUrl("/oauth/token")
+                                                .scopes(scopes ->
+                                                        scopes.add(new SecurityReference("READ", "Acesso de leitura"))
+                                                        .add(new SecurityReference("WRITE", "Acesso de escrita"))
+                                                )
+                                        )
+                                )
+                        )
+                )
+                .tags(Arrays.asList(
+                        new Tag().name("Cidades").description("Gerencia as cidades"),
+                        new Tag().name("Grupos").description("Gerencia os grupos de usuários"),
+                        new Tag().name("Cozinhas").description("Gerencia as cozinhas"),
+                        new Tag().name("Formas de pagamento").description("Gerencia as formas de pagamento"),
+                        new Tag().name("Pedidos").description("Gerencia os pedidos"),
+                        new Tag().name("Restaurantes").description("Gerencia os restaurantes"),
+                        new Tag().name("Estados").description("Gerencia os estados"),
+                        new Tag().name("Produtos").description("Gerencia os produtos de restaurantes"),
+                        new Tag().name("Usuários").description("Gerencia os usuários"),
+                        new Tag().name("Estatísticas").description("Estatísticas da AlgaFood"),
+                        new Tag().name("Permissões").description("Gerencia as permissões")
+                ));
+    }
+
+    @Bean
+    public GroupedOpenApi apiDocketV1() {
+        return GroupedOpenApi.builder()
+                .group("V1")
+                .packagesToScan("com.algaworks.algafood.api")
+                .pathsToMatch("/v1/**")
+                .build();
+    }
+
+    @Bean
+    public SecurityConfiguration security() {
+        return SecurityConfigurationBuilder.builder()
+                .clientId("client-id")
+                .clientSecret("client-secret")
+                .scopeSeparator(" ")
+                .useBasicAuthenticationWithAccessCodeGrant(true)
+                .build();
+    }
+
+    @Bean
+    public SecurityContext securityContext() {
+        AuthorizationScope[] scopes = {
+                new AuthorizationScope("READ", "Acesso de leitura"),
+                new AuthorizationScope("WRITE", "Acesso de escrita")
+        };
+        SecurityReference securityReference = new SecurityReference("AlgaFood", scopes);
+        return SecurityContext.builder()
+                .securityReferences(Collections.singletonList(securityReference))
+                .forPaths(PathSelectors.any())
+                .build();
+    }
+
+}

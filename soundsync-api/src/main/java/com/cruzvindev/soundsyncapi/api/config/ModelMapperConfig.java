@@ -1,4 +1,4 @@
-package com.cruzvindev.soundsyncapi.config;
+package com.cruzvindev.soundsyncapi.api.config;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
