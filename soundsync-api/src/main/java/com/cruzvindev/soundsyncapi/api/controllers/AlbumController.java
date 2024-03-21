@@ -62,9 +62,8 @@ public class AlbumController {
     })
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public AlbumDto cadastrar(@RequestBody @Valid AlbumDtoInput albumInput){
-        var album = albumDisassembler.paraObjetoDominio(albumInput);
-        return albumAssembler.paraModelo(albumService.salvar(album));
+    public void cadastrar(@RequestBody @Valid AlbumDtoInput albumInput){
+        albumService.salvar(albumInput);
     }
 
     @Operation(summary = "Atualiza um album por ID", responses = {

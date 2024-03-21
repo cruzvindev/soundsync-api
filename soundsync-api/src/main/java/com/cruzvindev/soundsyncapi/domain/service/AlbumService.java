@@ -4,6 +4,8 @@ import com.cruzvindev.soundsyncapi.domain.exception.EntidadeNaoEncontradaExcepti
 import com.cruzvindev.soundsyncapi.domain.exception.NegocioException;
 import com.cruzvindev.soundsyncapi.domain.model.Album;
 import com.cruzvindev.soundsyncapi.domain.repository.AlbumRepository;
+import com.cruzvindev.soundsyncapi.dtos.inputs.AlbumDtoInput;
+import com.cruzvindev.soundsyncapi.dtos.outputs.AlbumDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,8 +20,9 @@ public class AlbumService {
     private ArtistaService artistaService;
 
     @Transactional
-    public Album salvar(Album album){
-       var verificaArtista = artistaService.buscarOuFalhar(album.getArtista().getId());
+    public Album salvar(AlbumDtoInput album){
+       var verificaArtista = artistaService.buscarOuFalhar(album.artista().id());
+
         return albumRepository.save(album);
     }
 

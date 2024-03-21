@@ -16,11 +16,12 @@ public class ArtistaDtoMontador {
     private ModelMapper modelMapper;
 
     public ArtistaDto paraModelo(Artista artista){
-        return modelMapper.map(artista, ArtistaDto.class);
+       // return modelMapper.map(artista, ArtistaDto.class);
+        return new ArtistaDto(artista.getId(), artista.getNome(), artista.getOrigem(), artista.getBiografia());
     }
     public List<ArtistaDto> paraColecaoModelo (List<Artista> artistas){
         return artistas.stream()
-                .map(artista -> paraModelo(artista))
+                .map(this::paraModelo)
                 .collect(Collectors.toList());
     }
 }

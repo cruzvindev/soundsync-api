@@ -2,8 +2,6 @@ package com.cruzvindev.soundsyncapi.montadores.desmontador;
 
 import com.cruzvindev.soundsyncapi.domain.model.Artista;
 import com.cruzvindev.soundsyncapi.dtos.inputs.ArtistaDtoInput;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -12,21 +10,19 @@ import java.util.stream.Collectors;
 @Component
 public class ArtistaDtoDesmontador {
 
-
-    @Autowired
-    private ModelMapper modelMapper;
-
     public Artista paraObjetoDominio(ArtistaDtoInput artistaInput){
-        return modelMapper.map(artistaInput, Artista.class);
+        return new Artista(artistaInput.nome(), artistaInput.origem(), artistaInput.biografia());
     }
 
     public List<Artista> paraColecaoDominio(List<ArtistaDtoInput> artistasInput){
         return artistasInput.stream()
-                .map(artista -> paraObjetoDominio(artista))
+                .map(this::paraObjetoDominio)
                 .collect(Collectors.toList());
     }
 
     public void copiaParaObjetoDominio(ArtistaDtoInput artistaInput, Artista artista){
-        modelMapper.map(artistaInput, artista);
+        artista.setNome(artistaInput.nome());
+        artista.setOrigem(artistaInput.origem());
+        artista.setBiografia(artistaInput.biografia());
     }
 }

@@ -25,7 +25,7 @@ public class MusicaService {
 
     @Transactional
     public void salvar(MusicaDtoInput musicaInput){
-        Long albumId = musicaInput.getAlbumId().getId();
+        Long albumId = musicaInput.albumId().id();
         albumService.buscarOuFalhar(albumId);
         Musica musica = musicaDesmontador.paraObjetoDominio(musicaInput);
         musicaRepository.save(musica);

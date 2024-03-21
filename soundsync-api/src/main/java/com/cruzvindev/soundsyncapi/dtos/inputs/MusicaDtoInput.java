@@ -6,24 +6,21 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
-public class MusicaDtoInput {
 
-    @Schema(example = "A Distância")
-    @NotBlank
-    private String titulo;
+public record MusicaDtoInput(
+        @Schema(example = "A Distância")
+        @NotBlank
+        String titulo,
 
-    @NotNull
-    @Positive
-    @Schema(example = "200")
-    private Integer duracaoEmSegundos;
+        @NotNull
+        @Positive
+        @Schema(example = "200")
+        Integer duracaoEmSegundos,
 
-    @Valid
-    @NotNull
-    @JsonProperty("albumId")
-    private AlbumIdInput albumId;
+        @Valid
+        @NotNull
+        @JsonProperty("albumId")
+        AlbumIdInput albumId) {
+
 }
